@@ -5,6 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Photon.Pun;
 using TMPro;
+using Unity.VisualScripting;
 
 public class ShapeManager : MonoBehaviourPunCallbacks {
     public int circleCount = 0;
@@ -42,81 +43,152 @@ public class ShapeManager : MonoBehaviourPunCallbacks {
         Color.yellow, // Amarelo
         Color.red     // Vermelho
     };
-
-    void Start() {
+    void Start()
+    {
         UpdateUI();
-        LoadColors();
+        //LoadColors();
         SetDropdownListeners();
+
+        // If we're the master client, sync initial state to others
+        if (PhotonNetwork.IsMasterClient) {
+            SyncInitialState();
+        }
     }
+
+    private void SyncInitialState() {
+        if (!PhotonNetwork.IsConnected) return;
+
+        photonView.RPC("ReceiveInitialState", RpcTarget.Others, 
+            circleCount, squareCount, triangleCount, 
+            starCount, pentagonCount, hexagonCount);
+    }
+
+    [PunRPC]
+    private void ReceiveInitialState(int circle, int square, int triangle,  int star, int pentagon, int hexagon) {
+        circleCount = circle;
+        squareCount = square;
+        triangleCount = triangle;
+        starCount = star;
+        pentagonCount = pentagon;
+        hexagonCount = hexagon;
+        
+        UpdateUI();
+    }
+
 
     void SetDropdownListeners() {
-        circleColorDropdown.onValueChanged.AddListener(delegate { ChangeCircleColor(circleColorDropdown.value); });
-        squareColorDropdown.onValueChanged.AddListener(delegate { ChangeSquareColor(squareColorDropdown.value); });
-        triangleColorDropdown.onValueChanged.AddListener(delegate { ChangeTriangleColor(triangleColorDropdown.value); });
-        starColorDropdown.onValueChanged.AddListener(delegate { ChangeStarColor(starColorDropdown.value); });
-        pentagonColorDropdown.onValueChanged.AddListener(delegate { ChangePentagonColor(pentagonColorDropdown.value); });
-        hexagonColorDropdown.onValueChanged.AddListener(delegate { ChangeHexagonColor(hexagonColorDropdown.value); });
+        circleColorDropdown.onValueChanged.AddListener((int index) => OnColorChanged("CircleColor", index));
+        squareColorDropdown.onValueChanged.AddListener((int index) => OnColorChanged("SquareColor", index));
+        triangleColorDropdown.onValueChanged.AddListener((int index) => OnColorChanged("TriangleColor", index));
+        starColorDropdown.onValueChanged.AddListener((int index) => OnColorChanged("StarColor", index));
+        pentagonColorDropdown.onValueChanged.AddListener((int index) => OnColorChanged("PentagonColor", index));
+        hexagonColorDropdown.onValueChanged.AddListener((int index) => OnColorChanged("HexagonColor", index));
     }
 
-    void ChangeCircleColor(int index) {
-        circleRenderer.color = colors[index];
-    }
-
-    void ChangeSquareColor(int index) {
-        squareRenderer.color = colors[index];
-    }
-
-    void ChangeTriangleColor(int index) {
-        triangleRenderer.color = colors[index];
-    }
-
-    void ChangeStarColor(int index) {
-        starRenderer.color = colors[index];
-    }
-
-    void ChangePentagonColor(int index) {
-        pentagonRenderer.color = colors[index];
-    }
-
-    void ChangeHexagonColor(int index) {
-        hexagonRenderer.color = colors[index];
-    }
-
-    public void ChangeShapeCount(string shape, bool increase)
+    public void OnColorChanged(string shape, int index)
     {
-        switch (shape)
+        Color selectedColor = colors[index];
+        SetShapeColor(shape, selectedColor);
+
+        if (PhotonNetwork.IsConnected) {
+            photonView.RPC("SyncShapeColor", RpcTarget.Others, shape, index);
+        }
+        else {
+            SaveColorsLocally();
+        }
+    }
+
+    [PunRPC]
+    void SyncShapeColor(string shape, int colorIndex) {
+        SetShapeColor(shape, colors[colorIndex]);
+    }
+
+
+    void SetShapeColor(string shape, Color color) {
+        switch (shape) {
+            case "CircleColor": circleRenderer.color = color; break;
+            case "SquareColor": squareRenderer.color = color; break;
+            case "TriangleColor": triangleRenderer.color = color; break;
+            case "StarColor": starRenderer.color = color; break;
+            case "PentagonColor": pentagonRenderer.color = color; break;
+            case "HexagonColor": hexagonRenderer.color = color; break;
+        }
+    }
+
+    public void ChangeShapeCount(string shape, int delta, bool isNetworked = false)
+    {
+        if (!PhotonNetwork.IsConnected)
         {
-            case "Circle":
-                circleCount = increase ? circleCount + 1 : Mathf.Max(circleCount - 1, 0);
+            // Handle offline mode
+            UpdateShapeCountLocally(shape, delta);
+            UpdateUI();
+            return;
+        }
+
+        // If this is a network message we received, just apply it
+        if (isNetworked)
+        {
+            UpdateShapeCountLocally(shape, delta);
+            UpdateUI();
+            return;
+        }
+
+        // This is a local change - update locally and send to others
+        UpdateShapeCountLocally(shape, delta);
+        UpdateUI();
+        photonView.RPC("SyncShapeCount", RpcTarget.Others, shape, delta);
+    }
+
+    private void UpdateShapeCountLocally(string shape, int delta) {
+        // Add debug logging to track local updates
+        Debug.Log($"Updating locally: Shape={shape}, Delta={delta}");
+        
+        switch (shape) {
+            case "Circle": 
+                circleCount = Mathf.Max(0, circleCount + delta);
+                Debug.Log($"New circle count: {circleCount}");
                 break;
-            case "Square":
-                squareCount = increase ? squareCount + 1 : Mathf.Max(squareCount - 1, 0);
+            case "Square": 
+                squareCount = Mathf.Max(0, squareCount + delta);
+                Debug.Log($"New square count: {squareCount}");
                 break;
-            case "Triangle":
-                triangleCount = increase ? triangleCount + 1 : Mathf.Max(triangleCount - 1, 0);
+            case "Triangle": 
+                triangleCount = Mathf.Max(0, triangleCount + delta);
+                Debug.Log($"New triangle count: {triangleCount}");
                 break;
-            case "Star":
-                starCount = increase ? starCount + 1 : Mathf.Max(starCount - 1, 0);
+            case "Star": 
+                starCount = Mathf.Max(0, starCount + delta);
+                Debug.Log($"New star count: {starCount}");
                 break;
-            case "Pentagon":
-                pentagonCount = increase ? pentagonCount + 1 : Mathf.Max(pentagonCount - 1, 0);
+            case "Pentagon": 
+                pentagonCount = Mathf.Max(0, pentagonCount + delta);
+                Debug.Log($"New pentagon count: {pentagonCount}");
                 break;
-            case "Hexagon":
-                hexagonCount = increase ? hexagonCount + 1 : Mathf.Max(hexagonCount - 1, 0);
+            case "Hexagon": 
+                hexagonCount = Mathf.Max(0, hexagonCount + delta);
+                Debug.Log($"New hexagon count: {hexagonCount}");
                 break;
-            default:
-                Debug.LogWarning("Unknown shape: " + shape);
+            default: 
+                Debug.LogWarning("Unknown shape: " + shape); 
                 break;
         }
-        UpdateUI();
     }
 
+    [PunRPC]
+    void SyncShapeCount(string shape, int delta) {
+        // Add debug logging to track RPC calls
+        Debug.Log($"Received RPC SyncShapeCount: Shape={shape}, Delta={delta}");
+        UpdateShapeCountLocally(shape, delta);
+        UpdateUI();
+    }
+   
+
     public void IncreaseShape(string shape) {
-        ChangeShapeCount(shape, true);
+        ChangeShapeCount(shape, 1);
     }
 
     public void DecreaseShape(string shape) {
-        ChangeShapeCount(shape, false);
+        ChangeShapeCount(shape, -1);
     }
 
 
@@ -130,7 +202,6 @@ public class ShapeManager : MonoBehaviourPunCallbacks {
     }
 
     public void SaveQuantities() {
-        Debug.LogWarning(circleCount);
         PlayerPrefs.SetInt("CircleCount", circleCount);
         PlayerPrefs.SetInt("SquareCount", squareCount);
         PlayerPrefs.SetInt("TriangleCount", triangleCount);
@@ -141,7 +212,7 @@ public class ShapeManager : MonoBehaviourPunCallbacks {
         PlayerPrefs.Save(); // Salva as mudanças nos PlayerPrefs
 }
 
-    void SaveColors() {
+    void SaveColorsLocally() {
         PlayerPrefs.SetInt("CircleColor", circleColorDropdown.value);
         PlayerPrefs.SetInt("SquareColor", squareColorDropdown.value);
         PlayerPrefs.SetInt("TriangleColor", triangleColorDropdown.value);
@@ -152,6 +223,7 @@ public class ShapeManager : MonoBehaviourPunCallbacks {
         PlayerPrefs.Save();
     }
 
+    /*
     void LoadColors() {
         circleColorDropdown.value = PlayerPrefs.GetInt("CircleColor", 0);
         squareColorDropdown.value = PlayerPrefs.GetInt("SquareColor", 0);
@@ -161,16 +233,17 @@ public class ShapeManager : MonoBehaviourPunCallbacks {
         hexagonColorDropdown.value = PlayerPrefs.GetInt("HexagonColor", 0);
 
         // Atualizar a cor de cada sprite ao carregar
-        ChangeCircleColor(circleColorDropdown.value);
-        ChangeSquareColor(squareColorDropdown.value);
-        ChangeTriangleColor(triangleColorDropdown.value);
-        ChangeStarColor(starColorDropdown.value);
-        ChangePentagonColor(pentagonColorDropdown.value);
-        ChangeHexagonColor(hexagonColorDropdown.value);
+        SetShapeColor("CircleColor", colors[circleColorDropdown.value]);
+        SetShapeColor("SquareColor", colors[squareColorDropdown.value]);
+        SetShapeColor("Triangle", colors[triangleColorDropdown.value]);
+        SetShapeColor("StarColor", colors[starColorDropdown.value]);
+        SetShapeColor("PentagonColor", colors[pentagonColorDropdown.value]);
+        SetShapeColor("HexagonColor", colors[hexagonColorDropdown.value]);
     }
+    */
 
     public void SaveDataAndChangeScene() {
         SaveQuantities(); // Salva as quantidades selecionadas
-        SaveColors();     // Salva as cores selecionadas
+        SaveColorsLocally();     // Salva as cores selecionadas
     }
 }
