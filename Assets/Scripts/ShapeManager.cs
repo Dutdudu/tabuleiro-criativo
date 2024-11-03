@@ -3,9 +3,10 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System.Collections;
 using System.Collections.Generic;
+using Photon.Pun;
 using TMPro;
-public class ShapeManager : MonoBehaviour
-{
+
+public class ShapeManager : MonoBehaviourPunCallbacks {
     public int circleCount = 0;
     public int squareCount = 0;
     public int triangleCount = 0;
@@ -13,7 +14,6 @@ public class ShapeManager : MonoBehaviour
     public int pentagonCount = 0;
     public int hexagonCount = 0;
 
-    
     public SpriteRenderer circleRenderer ;
     public SpriteRenderer squareRenderer ;
     public SpriteRenderer triangleRenderer;
@@ -36,19 +36,20 @@ public class ShapeManager : MonoBehaviour
     public TMP_Dropdown pentagonColorDropdown;
     public TMP_Dropdown hexagonColorDropdown;
 
-   public Color[] colors = new Color[]
-{
-    Color.white,  // Branco
-    Color.blue,   // Azul
-    Color.yellow, // Amarelo
-    Color.red     // Vermelho
-};
+    public Color[] colors = new Color[] {
+        Color.white,  // Branco
+        Color.blue,   // Azul
+        Color.yellow, // Amarelo
+        Color.red     // Vermelho
+    };
 
-    void Start()
-    {
+    void Start() {
         UpdateUI();
         LoadColors();
-       
+        SetDropdownListeners();
+    }
+
+    void SetDropdownListeners() {
         circleColorDropdown.onValueChanged.AddListener(delegate { ChangeCircleColor(circleColorDropdown.value); });
         squareColorDropdown.onValueChanged.AddListener(delegate { ChangeSquareColor(squareColorDropdown.value); });
         triangleColorDropdown.onValueChanged.AddListener(delegate { ChangeTriangleColor(triangleColorDropdown.value); });
@@ -56,123 +57,102 @@ public class ShapeManager : MonoBehaviour
         pentagonColorDropdown.onValueChanged.AddListener(delegate { ChangePentagonColor(pentagonColorDropdown.value); });
         hexagonColorDropdown.onValueChanged.AddListener(delegate { ChangeHexagonColor(hexagonColorDropdown.value); });
     }
-    void ChangeCircleColor(int index)
-    {
+
+    void ChangeCircleColor(int index) {
         circleRenderer.color = colors[index];
-        Debug.Log("Selected index: " + index);
     }
 
-    void ChangeSquareColor(int index)
-    {
+    void ChangeSquareColor(int index) {
         squareRenderer.color = colors[index];
     }
 
-    void ChangeTriangleColor(int index)
-    {
+    void ChangeTriangleColor(int index) {
         triangleRenderer.color = colors[index];
     }
 
-    void ChangeStarColor(int index)
-    {
+    void ChangeStarColor(int index) {
         starRenderer.color = colors[index];
     }
 
-    void ChangePentagonColor(int index)
-    {
+    void ChangePentagonColor(int index) {
         pentagonRenderer.color = colors[index];
     }
 
-    void ChangeHexagonColor(int index)
-    {
+    void ChangeHexagonColor(int index) {
         hexagonRenderer.color = colors[index];
     }
 
-    public void IncreaseCircle()
-    {
+    public void IncreaseCircle() {
         circleCount++;
         UpdateUI();
     }
-    public void DecreaseCircle()
-    {
-        if(circleCount!=0)
+    public void DecreaseCircle() {
+        if(circleCount !=0)
             circleCount--;
         UpdateUI();
     }
 
-    public void IncreaseSquare()
-    {
+    public void IncreaseSquare() {
         
         squareCount++;
        UpdateUI();
     }
-    public void DecreaseSquare()
-    {
-        if(squareCount!=0)
+    public void DecreaseSquare() {
+        if(squareCount !=0)
             squareCount--;
        UpdateUI();
     }
 
-    public void IncreaseTriangle()
-    {
+    public void IncreaseTriangle() {
         triangleCount++;
       UpdateUI();
     }
-    public void DecreaseTriangle()
-    {
-        if(triangleCount!=0)
+    public void DecreaseTriangle() {
+        if(triangleCount !=0)
             triangleCount--;
       UpdateUI();
     }
 
-    public void IncreaseStar()
-    {
+    public void IncreaseStar() {
         starCount++;
        UpdateUI();
     }
-    public void DecreaseStar()
-    {
-        if(starCount!=0)
+    public void DecreaseStar() {
+        if(starCount !=0)
             starCount--;
        UpdateUI();
     }
 
-    public void IncreasePentagon()
-    {
+    public void IncreasePentagon() {
         pentagonCount++;
         UpdateUI();
     }
-    public void DecreasePentagon()
-    {
-        if(pentagonCount!=0)
+    public void DecreasePentagon() {
+        if(pentagonCount !=0)
             pentagonCount--;
         UpdateUI();
     }
 
-    public void IncreaseHexagon()
-    {
+    public void IncreaseHexagon() {
         hexagonCount++;
         UpdateUI();
     }
-    public void DecreaseHexagon()
-    {
-        if(hexagonCount!=0)
+    public void DecreaseHexagon() {
+        if(hexagonCount != 0)
             hexagonCount--;
         UpdateUI();
     }
 
-    void UpdateUI()
-    {
-        
-        Debug.LogWarning("Chamado");
-        circleText.text = "Circle: " + circleCount;
-        squareText.text = "Square: " + squareCount;
-        triangleText.text = "Triangle: " + triangleCount;
-        starText.text = "Star: " + starCount;
-        pentagonText.text = "Pentagon: " + pentagonCount;
-        hexagonText.text = "Hexagon: " + hexagonCount;
+    void UpdateUI() {
+        circleText.text = "Circulo: " + circleCount;
+        squareText.text = "Quadrado: " + squareCount;
+        triangleText.text = "Triângulo: " + triangleCount;
+        starText.text = "Estrela: " + starCount;
+        pentagonText.text = "Pentágono: " + pentagonCount;
+        hexagonText.text = "Hexágono: " + hexagonCount;
     }
-     public void SaveQuantities()
-{
+
+    public void SaveQuantities() {
     Debug.LogWarning(circleCount);
     PlayerPrefs.SetInt("CircleCount", circleCount);
     PlayerPrefs.SetInt("SquareCount", squareCount);
@@ -184,8 +164,7 @@ public class ShapeManager : MonoBehaviour
     PlayerPrefs.Save(); // Salva as mudanças nos PlayerPrefs
 }
 
-    void SaveColors()
-    {
+    void SaveColors() {
         PlayerPrefs.SetInt("CircleColor", circleColorDropdown.value);
         PlayerPrefs.SetInt("SquareColor", squareColorDropdown.value);
         PlayerPrefs.SetInt("TriangleColor", triangleColorDropdown.value);
@@ -196,8 +175,7 @@ public class ShapeManager : MonoBehaviour
         PlayerPrefs.Save();
     }
 
-    void LoadColors()
-    {
+    void LoadColors() {
         circleColorDropdown.value = PlayerPrefs.GetInt("CircleColor", 0);
         squareColorDropdown.value = PlayerPrefs.GetInt("SquareColor", 0);
         triangleColorDropdown.value = PlayerPrefs.GetInt("TriangleColor", 0);
@@ -214,11 +192,8 @@ public class ShapeManager : MonoBehaviour
         ChangeHexagonColor(hexagonColorDropdown.value);
     }
 
-    public void SaveDataAndChangeScene()
-    {
+    public void SaveDataAndChangeScene() {
         SaveQuantities(); // Salva as quantidades selecionadas
         SaveColors();     // Salva as cores selecionadas
-        // SceneManager.LoadScene("NextScene"); // Substitua "NextScene" pelo nome da próxima cena
     }
-    
 }
