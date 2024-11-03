@@ -200,15 +200,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2949073558866551253, guid: fdfef30631ec0d14d8f0f364bc8bcf14, type: 3}
       propertyPath: m_Color.b
-      value: 0.9528302
+      value: 0.74509805
       objectReference: {fileID: 0}
     - target: {fileID: 2949073558866551253, guid: fdfef30631ec0d14d8f0f364bc8bcf14, type: 3}
       propertyPath: m_Color.g
-      value: 0.9528302
+      value: 0.4627451
       objectReference: {fileID: 0}
     - target: {fileID: 2949073558866551253, guid: fdfef30631ec0d14d8f0f364bc8bcf14, type: 3}
       propertyPath: m_Color.r
-      value: 0.9528302
+      value: 0.003921569
       objectReference: {fileID: 0}
     - target: {fileID: 7475081405310388033, guid: fdfef30631ec0d14d8f0f364bc8bcf14, type: 3}
       propertyPath: m_Name
@@ -477,7 +477,7 @@ MonoBehaviour:
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
   m_Colors:
-    m_NormalColor: {r: 0.9254902, g: 0.09019608, b: 0.2627451, a: 1}
+    m_NormalColor: {r: 0.99215686, g: 0.9490196, b: 0.003921569, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
@@ -586,7 +586,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.9622642, g: 0.9351905, b: 0.43120328, a: 0}
+  m_BackGroundColor: {r: 0.46829468, g: 0.745283, b: 0.46052867, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -1027,7 +1027,7 @@ MonoBehaviour:
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
   m_Colors:
-    m_NormalColor: {r: 0.9607843, g: 0.54509807, b: 0.12156863, a: 1}
+    m_NormalColor: {r: 0.95686275, g: 0.54509807, b: 0.11764706, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
