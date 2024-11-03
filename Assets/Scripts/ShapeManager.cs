@@ -82,66 +82,43 @@ public class ShapeManager : MonoBehaviourPunCallbacks {
         hexagonRenderer.color = colors[index];
     }
 
-    public void IncreaseCircle() {
-        circleCount++;
-        UpdateUI();
-    }
-    public void DecreaseCircle() {
-        if(circleCount !=0)
-            circleCount--;
-        UpdateUI();
-    }
-
-    public void IncreaseSquare() {
-        
-        squareCount++;
-       UpdateUI();
-    }
-    public void DecreaseSquare() {
-        if(squareCount !=0)
-            squareCount--;
-       UpdateUI();
-    }
-
-    public void IncreaseTriangle() {
-        triangleCount++;
-      UpdateUI();
-    }
-    public void DecreaseTriangle() {
-        if(triangleCount !=0)
-            triangleCount--;
-      UpdateUI();
-    }
-
-    public void IncreaseStar() {
-        starCount++;
-       UpdateUI();
-    }
-    public void DecreaseStar() {
-        if(starCount !=0)
-            starCount--;
-       UpdateUI();
-    }
-
-    public void IncreasePentagon() {
-        pentagonCount++;
-        UpdateUI();
-    }
-    public void DecreasePentagon() {
-        if(pentagonCount !=0)
-            pentagonCount--;
+    public void ChangeShapeCount(string shape, bool increase)
+    {
+        switch (shape)
+        {
+            case "Circle":
+                circleCount = increase ? circleCount + 1 : Mathf.Max(circleCount - 1, 0);
+                break;
+            case "Square":
+                squareCount = increase ? squareCount + 1 : Mathf.Max(squareCount - 1, 0);
+                break;
+            case "Triangle":
+                triangleCount = increase ? triangleCount + 1 : Mathf.Max(triangleCount - 1, 0);
+                break;
+            case "Star":
+                starCount = increase ? starCount + 1 : Mathf.Max(starCount - 1, 0);
+                break;
+            case "Pentagon":
+                pentagonCount = increase ? pentagonCount + 1 : Mathf.Max(pentagonCount - 1, 0);
+                break;
+            case "Hexagon":
+                hexagonCount = increase ? hexagonCount + 1 : Mathf.Max(hexagonCount - 1, 0);
+                break;
+            default:
+                Debug.LogWarning("Unknown shape: " + shape);
+                break;
+        }
         UpdateUI();
     }
 
-    public void IncreaseHexagon() {
-        hexagonCount++;
-        UpdateUI();
+    public void IncreaseShape(string shape) {
+        ChangeShapeCount(shape, true);
     }
-    public void DecreaseHexagon() {
-        if(hexagonCount != 0)
-            hexagonCount--;
-        UpdateUI();
+
+    public void DecreaseShape(string shape) {
+        ChangeShapeCount(shape, false);
     }
+
 
     void UpdateUI() {
         circleText.text = "Circulo: " + circleCount;
@@ -153,15 +130,15 @@ public class ShapeManager : MonoBehaviourPunCallbacks {
     }
 
     public void SaveQuantities() {
-    Debug.LogWarning(circleCount);
-    PlayerPrefs.SetInt("CircleCount", circleCount);
-    PlayerPrefs.SetInt("SquareCount", squareCount);
-    PlayerPrefs.SetInt("TriangleCount", triangleCount);
-    PlayerPrefs.SetInt("StarCount", starCount);
-    PlayerPrefs.SetInt("PentagonCount", pentagonCount);
-    PlayerPrefs.SetInt("HexagonCount", hexagonCount);
+        Debug.LogWarning(circleCount);
+        PlayerPrefs.SetInt("CircleCount", circleCount);
+        PlayerPrefs.SetInt("SquareCount", squareCount);
+        PlayerPrefs.SetInt("TriangleCount", triangleCount);
+        PlayerPrefs.SetInt("StarCount", starCount);
+        PlayerPrefs.SetInt("PentagonCount", pentagonCount);
+        PlayerPrefs.SetInt("HexagonCount", hexagonCount);
 
-    PlayerPrefs.Save(); // Salva as mudanças nos PlayerPrefs
+        PlayerPrefs.Save(); // Salva as mudanças nos PlayerPrefs
 }
 
     void SaveColors() {

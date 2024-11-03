@@ -1405,14 +1405,14 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 356547120}
         m_TargetAssemblyTypeName: ShapeManager, Assembly-CSharp
-        m_MethodName: DecreaseStar
-        m_Mode: 1
+        m_MethodName: DecreaseShape
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument: Star
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &154693794
@@ -2131,14 +2131,14 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 356547120}
         m_TargetAssemblyTypeName: ShapeManager, Assembly-CSharp
-        m_MethodName: DecreaseSquare
-        m_Mode: 1
+        m_MethodName: DecreaseShape
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument: Square
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &280727642
@@ -2264,14 +2264,14 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 356547120}
         m_TargetAssemblyTypeName: ShapeManager, Assembly-CSharp
-        m_MethodName: DecreasePentagon
-        m_Mode: 1
+        m_MethodName: DecreaseShape
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument: Pentagon
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &286692289
@@ -3660,14 +3660,14 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 356547120}
         m_TargetAssemblyTypeName: ShapeManager, Assembly-CSharp
-        m_MethodName: DecreaseTriangle
-        m_Mode: 1
+        m_MethodName: DecreaseShape
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument: Triangle
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &538576940
@@ -4068,14 +4068,14 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 356547120}
         m_TargetAssemblyTypeName: ShapeManager, Assembly-CSharp
-        m_MethodName: IncreaseCircle
-        m_Mode: 1
+        m_MethodName: IncreaseShape
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument: Circle
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &615866765
@@ -5326,26 +5326,14 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 356547120}
         m_TargetAssemblyTypeName: ShapeManager, Assembly-CSharp
-        m_MethodName: IncreasePentagon
-        m_Mode: 1
+        m_MethodName: IncreaseShape
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: ShapeManager, Assembly-CSharp
-        m_MethodName: 
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument: Pentagon
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &778844988
@@ -6169,14 +6157,14 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 356547120}
         m_TargetAssemblyTypeName: ShapeManager, Assembly-CSharp
-        m_MethodName: IncreaseTriangle
-        m_Mode: 1
+        m_MethodName: IncreaseShape
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument: Triangle
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &940795105
@@ -7910,14 +7898,14 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 356547120}
         m_TargetAssemblyTypeName: ShapeManager, Assembly-CSharp
-        m_MethodName: DecreaseHexagon
-        m_Mode: 1
+        m_MethodName: DecreaseShape
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument: Hexagon
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &1137568349
@@ -8177,14 +8165,14 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 356547120}
         m_TargetAssemblyTypeName: ShapeManager, Assembly-CSharp
-        m_MethodName: IncreaseSquare
-        m_Mode: 1
+        m_MethodName: IncreaseShape
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument: Square
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &1144283643
@@ -11290,14 +11278,14 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 356547120}
         m_TargetAssemblyTypeName: ShapeManager, Assembly-CSharp
-        m_MethodName: DecreaseCircle
-        m_Mode: 1
+        m_MethodName: DecreaseShape
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument: Circle
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &1718458987
@@ -13000,14 +12988,14 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 356547120}
         m_TargetAssemblyTypeName: ShapeManager, Assembly-CSharp
-        m_MethodName: IncreaseHexagon
-        m_Mode: 1
+        m_MethodName: IncreaseShape
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument: Hexagon
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &1982908072
@@ -13133,14 +13121,14 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 356547120}
         m_TargetAssemblyTypeName: ShapeManager, Assembly-CSharp
-        m_MethodName: IncreaseStar
-        m_Mode: 1
+        m_MethodName: IncreaseShape
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument: Star
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &2005936505
