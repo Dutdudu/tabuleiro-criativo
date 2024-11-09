@@ -1,17 +1,16 @@
 using UnityEngine;
+using Photon.Pun;
 
-public class DragObject : MonoBehaviour
+public class DragObject : MonoBehaviourPun
 {
     private bool isDragging = false;
     private Vector3 offset;
 
     void OnMouseDown()
     {
-        // Converter a posição do mouse para coordenadas de mundo
+        // Calculate the offset to keep the drag smooth
         Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        mousePosition.z = 0f; // Certifique-se de que a posição Z está zerada (importante para 2D)
-
-        // Calcular o deslocamento entre a posição do mouse e a posição do objeto
+        mousePosition.z = 0f;
         offset = transform.position - mousePosition;
         isDragging = true;
     }
@@ -25,12 +24,20 @@ public class DragObject : MonoBehaviour
     {
         if (isDragging)
         {
-            // Converter a posição do mouse para coordenadas de mundo
+            // Update the position locally
             Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             mousePosition.z = 0f;
-
-            // Mover o objeto para seguir o mouse, com o deslocamento aplicado
             transform.position = mousePosition + offset;
+
+            // Send the position to all clients
+            photonView.RPC("UpdatePosition", RpcTarget.AllBuffered, transform.position);
         }
+    }
+
+    [PunRPC]
+    void UpdatePosition(Vector3 newPosition)
+    {
+        // Set the new position based on the RPC call
+        transform.position = newPosition;
     }
 }

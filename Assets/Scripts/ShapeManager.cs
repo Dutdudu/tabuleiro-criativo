@@ -246,4 +246,12 @@ public class ShapeManager : MonoBehaviourPunCallbacks {
         SaveQuantities(); // Salva as quantidades selecionadas
         SaveColorsLocally();     // Salva as cores selecionadas
     }
+
+
+    public void FinishAndLoadNextScene() {
+        if (PhotonNetwork.IsMasterClient) {
+            // Somente o clinte master pode confirmar a mudacanca de cena
+            PhotonNetwork.LoadLevel("Gameplay");
+        }
+    } 
 }

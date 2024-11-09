@@ -18,6 +18,9 @@ EditorBuildSettings:
     path: Assets/Scenes/como o jogo chega ao fim.unity
     guid: a132ffcd041933646ac5aa25733fe3bc
   - enabled: 1
+    path: Assets/Scenes/parametros.unity
+    guid: 2304ed10ce5f1954f9972095cf669779
+  - enabled: 0
     path: Assets/Scenes/casa vencedora.unity
     guid: 551349f820eeef540b941ae651e38021
   - enabled: 1
